@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sales Record</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f5f5f5; }
+        .container { margin: 20px auto; max-width: 800px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #007bff; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sales Records</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Item name</th>
+                    <th>Quantity</th>
+                    <th>Sale Date</th>
+                </tr>
+            </thead>
+            <tbody id="sales-table">
+                <!-- Sales records will be dynamically populated -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch sales records from API
+        fetch('sales.php')
+            .then(response => response.json())
+            .then(data => {
+                const table = document.getElementById('sales-table');
+                data.forEach(record => {
+                    const row = `<tr>
+                        <td>${record.id}</td>
+                        <td>${record.item_name}</td>
+                        <td>${record.quantity}</td>
+                        <td>${record.sale_date}</td>
+                    </tr>`;
+                    table.innerHTML += row;
+                });
+            })
+            .catch(error => console.error('Error fetching sales:', error));
+    </script>
+</body>
+</html>
